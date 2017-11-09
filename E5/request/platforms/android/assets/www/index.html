@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">-->
+        <meta name="format-detection" content="telephone=no"/>
+        <meta name="msapplication-tap-highlight" content="no"/>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"/>
+        <link rel="stylesheet" type="text/css" href="css/index.css"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/custom.css"/>
+        <title>Request App</title>
+    </head>
+    <body>
+        <div class="app" id="app">
+            
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                var sugges = '';
+                // Se abren dos bases distintas
+                var storage = window.localStorage;
+                var db = window.openDatabase('mydb', '1.0', 'DataBase', 2 * 1024 * 1024);
+
+                // Dependiendo de si el usuario es 'admin', 'client' o nada se muestra una pantalla diferente
+                if (storage.user === undefined) {
+                    $("#app").html('<button class="btn btn-info" onclick="newUser(\'client\')">Client</button><button class="btn btn-success" onclick="newUser(\'admin\')">Admin</button>');
+                } else if (storage.getItem("user") === "admin") {
+                    $("#app").html('<button class="btn btn-primary" onclick="logout()">Logout</button><h3>You are an admin</h3>');
+                    db.readTransaction(function (tx) {
+                        tx.executeSql('SELECT * FROM ADMIN', [], function (tx, results) {
+                            var len = results.rows.length;
+                            
+                            // Se muestran todas las sugerencias que siguen en modo 'waiting'
+                            for (var i = 0; i < len; i++) {
+                                if (results.rows.item(i).status === 'waiting') {
+                                    sugges += '<div class="admin"><p>' + results.rows.item(i).sug + '</p><button class="btn btn-success admin" onclick="response(' + results.rows.item(i).id + ', \'accept\', \'' + results.rows.item(i).token + '\')">Accept</button><button class="btn btn-danger admin" onclick="response(' + results.rows.item(i).id + ', \'deny\', \'' + results.rows.item(i).token + '\')">Deny</button></div>';
+                                }
+                            }
+
+                            $("#app").append(sugges);
+                        }, null);
+                    });
+                } else if (storage.getItem("user") === "client") {
+                    $("#app").html('<h3>You are a client</h3><a href="./request.html"><button class="btn btn-danger">Create a new request</button></a><a href="./check.html"><button class="btn btn-warning">Check status</button></a><button class="btn btn-primary" onclick="logout()">Logout</button>');
+                }
+            });
+
+            // Funcion que se ejecuta para desloguearse
+            function logout() {
+                // Se desinscribe de ambos topics: 'admin' y 'client'
+                FCMPlugin.unsubscribeFromTopic("admin");
+                FCMPlugin.unsubscribeFromTopic("client");
+                var storage = window.localStorage;
+                storage.removeItem("user");  // Se borra el tipo de usuario que es
+                location.reload(true);  // Se recarga la pagina 
+            }
+
+            // Funcion que se ejecuta cuando se registra un nuevo usuario: 'admin' o 'client'
+            function newUser(user) {
+                var storage = window.localStorage;
+                storage.setItem("user", user);  // Se guarda el tipo de usuario
+                location.reload(true);  // Se recarga la pagina
+            }
+
+            // Funcion que se ejecuta cuando el admin responde a los clientes
+            function response(n, answer, token) {
+                console.log('Token response: ' + token);
+                var db = window.openDatabase('mydb', '1.0', 'DataBase', 2 * 1024 * 1024);
+                db.transaction(function (tx) {
+                    // Se actualiza en el estado en la base de datos del admin
+                    tx.executeSql('UPDATE ADMIN SET status="' + answer + '" WHERE id=' + n);
+                });
+                // Se envia el mensaje al cliente que haya enviado esa sugerencia
+                $.post('https://request-app-easier.herokuapp.com/api.php', { n: n, value: '', user: 'client', status: answer, token: token }).done(function(data) {
+                    $.post('https://request-app-easier.herokuapp.com/api.php', { n: n, value: '', user: 'admin', status: answer, token: token }).done(function(data) {
+                        location.reload(true);  // Se recarga la pagina
+                    });
+                });
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+:root {
+  --color-1: #EF6556;
+  --color-2: #E2A768;
+  --color-3: #D7BF7E;
+  --color-4: #D7EDCE;
+  --color-5: #F7F0C9;
+}
+
+body {
+    background-color: var(--color-5);
+}
+
+button.btn {
+    margin-top: 5px;
+    height: 50px;
+    width: 100%;
+}
+
+button.admin {
+    margin-top: 5px;
+    height: 30px;
+    width: 50%;
+}
+
+div.admin {
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px 2px #888;
+    margin-top: 10px;
+    padding: 2px;
+}
+
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    button.btn {
+        width: 100px;
+    }
+}
+
+table#suggestions tr th {
+    border-bottom: .2px solid;
+    border-left: .2px solid;
+    border-right: .2px solid;
+    overflow: hidden;
+    text-align: center;
+    width: 33%;
+}

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "785708688517",
+    "firebase_url": "https://request-a670a.firebaseio.com",
+    "project_id": "request-a670a",
+    "storage_bucket": "request-a670a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785708688517:android:519f7580b004442d",
+        "android_client_info": {
+          "package_name": "com.easier.tech.rq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "785708688517-sl2lgdvfq1bde8hv73fea3t35r86f3b7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIugtMMFjtiNZRTXcSdqeNuEMJIqJCYKg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
