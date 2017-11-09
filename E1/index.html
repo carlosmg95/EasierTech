@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>EasierTech</title>
+
+  <!-- Bootstrap Core CSS -->
+  <link href="CSS/bootstrap.min.css" rel="stylesheet">
+
+  <!-- jQuery CSS -->
+  <link rel="stylesheet" href="CSS/jquery-ui.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="CSS/custom.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <div class="container-fluid header">
+    <h1>EasierTech</h1>
+  </div>  <!-- /Header -->
+
+  <div class="clear"></div>
+
+  <!-- Main content -->
+  <div class="container">
+    <!-- Introduce -->
+    <div class="row">
+      <h4>EasierTech (<em>El tinglao de las tartas</em>) es actualmente un potente equipo integrado por 3 personas: - una con dedicación total - dos a tiempo parcial (en los ratos libres del trabajo).</h4>
+    </div>  <!-- /Introduce -->
+
+    <!-- Sections -->
+    <div class="row">
+      <!-- Section 1 -->
+      <div class="col-md-4 section">
+        <h3>Qué buscamos:</h3>
+        <ul>
+          <li>Construir un mundo mejor, aportando nuestro esfuerzo y los recursos a nuestro alcance para demostrar la viabilidad de modelos "empresariales" centrados en las personas en lugar de en el beneficio económico.</li>
+        </ul>
+      </div>  <!-- /Section 1 -->
+
+      <!-- Section 2 -->
+      <div class="col-md-4 section">
+        <h3>Qué hacemos:</h3>
+        <ul>
+          <li>Apoyamos a las personas que de forma desinteresada dedican su tiempo y su energía a ayudar a los demás.</li>
+          <li>Apostamos por la educación como pilar fundamental para construir un futuro más humano.</li>
+          <li>Tratamos de generar puestos de trabajo de calidad en respuesta a la precarización del empleo.</li>
+          <li>Ayudamos a pequeñas organizaciones y asociaciones que apuestan por los principios de la economía social a sacar partido de las opciones que ofrecen las nuevas tecnologías para mejorar su sostenibilidad y asegurar su autosuficiencia.</li>
+        </ul>
+      </div>  <!-- /Section 2 -->
+
+      <!-- Section 3 -->
+      <div class="col-md-4 section">
+        <h3>Cómo se sostienen estos proyectos:</h3>
+        <ul>
+          <li>Prestando servicios de software a medianas y grandes empresas.</li>
+          <ul>
+            <li>Implantando herramientas y soluciones de código abierto.</li>
+            <li>Integración continua, automatización de tests, eCommerce…</li>
+          </ul>
+          <li>Destinando al menos el 50% de la facturación a proyectos de contenido social.</li>
+          <li>Y el 50% restante a pagar nuestros salarios y costes de operación.</li>
+          <li>Dedicando una parte de las horas de trabajo a impulsar iniciativas sin ánimo de lucro.</li>
+        </ul>
+      </div>  <!-- /Section 3 -->
+
+      <!-- Section 4 -->
+      <div class="col-md-6 col-md-offset-3 section">
+        <h3>Nuestros proyectos de colaboración actuales:</h3>
+        <div id="accordion">
+          <!-- Project 1 -->
+          <h3 id="selector1">Abriendo Mentes:<span class="readMore">Read more…</span></h3>
+          <div>
+            <ul>
+              <li>Apoyo a dos voluntarios que se encuentran trabajando en Costa Rica.</li>
+              <li>Como profes de "computación" (informática para los de acá).</li>
+              <li>En Potrero y Brasilito, dos pequeñas poblaciones de la region de Guanacaste con acceso limitado a la educación.</li>
+              <li>Para la ONG <a href="http://abriendomentes.org/">Abriendo Mentes</a>.</li>
+              <li>Nos hacemos cargo del alojamiento (150-200€/mes).</li>
+              <li>Y de una pequeña ayuda económica (300€/mes).</li>
+              <li>De modo que los voluntarios sólo tengan que aportar una pequeña cantidad de su bolsillo.</li>
+              <ul>
+                <li>Y puedan plantearse proyectos a más largo plazo.</li>
+              </ul>
+            </ul>
+          </div>  <!-- /Project 1 -->
+
+          <!-- Project 2 -->
+          <h3 id="selector2">Ayuda a la <a href="http://fundacionapai.org/">Fundación APAI:</a><span class="readMore">Read more…</span></h3>
+          <div>
+            <ul>
+              <li>Creación de una nueva <a href="http://tiendafundacionapai.org/">tienda online</a> usando soluciones OpenSource:.</li>
+              <ul>
+                <li>Wordpress + WooCommerce.</li>
+                <li>Incluyendo la nueva línea de galletas artesanas.</li>
+                <li>Implantación de estrategias.</li>
+              </ul>
+              <li>Con el trabajo voluntario de los integrantes del "tinglao".</li>
+            </ul>
+          </div>  <!-- /Project 2 -->
+        </div>
+      </div>  <!-- /Section 4 -->
+
+      <!-- Section 5 -->
+      <div class="col-md-12 section">
+        <h3>Planes de futuro:</h3>
+        <p>Proyectos de cooperación basados en España, aún por definir, pero con las mismas líneas maestras: - Basados en la educación como motor de cambio - Involucrar a la comunidad universitaria - Apoyando a voluntarios - Empujando a las pequeñas organizaciones con fines sociales.</p>
+        <p>En definitiva, de un modo u otro poner la tecnologia al servicio de las personas para hacer más humano el mundo que nos rodea.</p>
+      </div>  <!-- /Secion 5 -->
+    </div>  <!-- /Sections -->
+  </div>  <!-- /Main -->
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <!-- Bootstrap Core JavaScript -->
+  <script src="JS/bootstrap.min.js"></script>
+
+  <script>
+    $( function() {
+      $("#accordion").accordion({
+        collapsible: true,
+        active: false  // Every project is closed
+      });
+    });
+  </script>
+</body>
+</html>
