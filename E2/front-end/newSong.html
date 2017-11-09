@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Songs Played</title>
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="CSS/bootstrap.min.css">
+
+  <!-- jQuery CSS -->
+  <link rel="stylesheet" href="CSS/jquery-ui.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="CSS/custom.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <div class="header">
+    <a href="./index.html"><h1>Songs played</h1></a>
+  </div>  <!-- /Header -->
+  <div class="clear"></div>
+
+  <!-- Main -->
+  <div class="container" id="tabs">
+    <!-- Formulario para introducir la cancion -->
+    <div class="col-md-4 col-md-offset-4">
+      <fieldset>
+        <!-- Legend -->
+        <legend>New played song</legend>
+        <!-- Artist -->
+        <label class="newSong">Artist:</label>
+        <input type="text" id="artist" class="newSong"/><br/>
+        <!-- Album -->
+        <label class="newSong">Album:</label>
+        <input type="text" id="album" class="newSong"/><br/>
+        <!-- Track -->
+        <label class="newSong">Track:</label>
+        <input type="text" id="track" class="newSong"/><br/>
+        <!-- Title -->
+        <label class="newSong">Title:</label>
+        <input type="text" id="title" class="newSong"/><br/>
+        <!-- User -->
+        <label class="newSong">User:</label>
+        <input type="text" id="user" class="newSong"/><br/>
+        <!-- Button -->
+        <button class="btn btn-success newSong" onclick="send()">Send</button>
+      </fieldset>
+    </div>
+  </div>  <!-- /Main -->
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <!-- Bootstrap Core JavaScript -->
+  <script src="JS/bootstrap.min.js"></script>
+
+  <script>
+    function send() {
+      if($("#artist").val() !== "" && $("#album").val() !== "" && $("#track").val() !== "" && $("#title").val() !== "" && $("#user").val() !== "") {
+        $.ajax({
+          url: "https://songs-played.herokuapp.com/events",  // URL del servidor
+          type: "POST",
+          data: {
+            "artist": $("#artist").val(),
+            "album": $("#album").val(),
+            "track": $("#track").val(),
+            "title": $("#title").val(),
+            "user": $("#user").val()
+          }
+        });
+
+        // Se limpian los campos
+        $("#artist").val("");
+        $("#album").val("");
+        $("#track").val("");
+        $("#title").val("");
+        $("#user").val("");
+      } else {
+        alert("There are empty fields");
+      }
+    }
+  </script>
+</body>
+</html>

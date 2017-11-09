@@ -1,0 +1,104 @@
+:root {
+  --color-1: #D1CF9D;
+  --color-2: #7F8F55;
+  --color-3: #CDDFCF;
+  --color-4: #626D3C;
+  --color-5: #85B4A3;
+}
+
+@font-face {
+    font-family: "colaborate-boldregular";
+    src: url("ColabBol-webfont.eot");
+    src: url("ColabBol-webfont.eot?#iefix") format("embedded-opentype"),
+         url("ColabBol-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+body {
+  background-color: var(--color-3);
+}
+
+button.newSong {
+  float: right;
+  margin: 5px 5px 0 0;
+}
+
+div.clear {
+  height: 130px;
+  margin-bottom: 15px;
+}
+
+div.header {
+  background-color: var(--color-1);
+  box-shadow: 0 0 5px 5px #888;
+  height: 130px;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  z-index: 1;
+}
+
+div.header h1 {
+  color: var(--color-4);
+  font-family: "colaborate-boldregular";
+  font-size: 80px;
+  vertical-align: middle;
+}
+
+@media screen and (max-width:500px) {
+  div.header h1 {
+    color: var(--color-4);
+    font-family: "colaborate-boldregular";
+    font-size: 60px;
+    vertical-align: middle;
+  }
+}
+
+div.song {
+  box-shadow: 0 0 3px 1px #888;
+  padding: 10px;
+}
+
+h3 {
+  color: var(--color-2);
+}
+
+input.newSong {
+  color: var(--color-4);
+  padding: 2px;
+  height: 30px;
+  width: 50%;
+}
+
+input.newSong:focus {
+  background-color: var(--color-1);
+  border: .2px solid black;
+}
+
+label.newSong {
+  border-bottom: .2px solid var(--color-4);
+  color: var(--color-4);
+  height: 20px;
+  width: 40%;
+}
+
+legend {
+  color: var(--color-2);
+}
+
+li.newSong {
+  box-shadow: 1px 1px 3px 1px #888;
+  border-radius: 5px;
+  margin-right: 500px;
+  padding: 10px;
+}
+
+li.newSong a {
+  color: var(--color-4);
+  font-family: "colaborate-boldregular";
+}

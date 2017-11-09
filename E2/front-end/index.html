@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Songs Played</title>
+
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="CSS/bootstrap.min.css">
+
+  <!-- jQuery CSS -->
+  <link rel="stylesheet" href="CSS/jquery-ui.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="CSS/custom.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <div class="header">
+    <a href="./index.html"><h1>Songs played</h1></a>
+  </div>  <!-- /Header -->
+  <div class="clear"></div>
+
+  <!-- Main -->
+  <div class="container">
+    <button class="btn btn-info newSong" onclick="window.location.href='./newSong.html';">New song has been played</button>
+    <br/><br/>
+
+    <!-- Tabs -->
+    <div id="tabs" class="tabs">
+      <ul></ul>
+    </div>  <!-- /Tabs -->
+  </div>  <!-- /Main -->
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <!-- Bootstrap Core JavaScript -->
+  <script src="JS/bootstrap.min.js"></script>
+
+  <script>
+    $( function() {
+      var tabs = $("#tabs").tabs();
+
+      $.ajax({
+        url: "https://songs-played.herokuapp.com/getSongs",  // URL del servidor
+        dataType: "JSONP",  // Formato en el que se pasan los datos
+        type: "GET",
+        success: function (data) {
+          console.log("success")
+          console.log(data);
+          render(data, tabs);
+        }
+      });
+    });
+
+    function render(json, tabs) {;
+      var users = new Array();
+      var usersList = '';
+      var songsList = '';
+      var j = 1;
+
+      // Se annaden los usuarios a las pestannas
+      for (var i = 0; i < json.length; i++) {
+        // Las canciones de un mismo usuario estan seguidas por lo que se sabe que cambia de usuario cuando dos canciones
+        // seguidas tienen distintos usuarios
+        if ((i === 0) || (json[i].user !== json[i - 1].user)) {
+          users.push(json[i].user);  // Se annaden a una lista para usarla mas tarde
+          tabs.find(".ui-tabs-nav").append('<li class="newSong"><a href="#tabs-' + j + '">' + json[i].user + '</a></li>');
+          j++;
+        }
+      }
+      j = 1;
+
+      // Se annade todas las canciones en la pestanna correcta con su usuario
+      for (var i = 0; i < users.length; i++) {
+        tabs.append('<div id="tabs-' + j + '"></div>');
+        for (var k = 0; k < json.length; k++) {
+          if (json[k].user === users[i]) {
+            var ts = new Date(json[k].ts);
+            tabs.find("#tabs-" + j).append('<div class="song" style="float: left; margin: 0 0 20px 20px;">'
+                + '<strong>Artist:</strong> ' + json[k].data.artist + '<br/>'
+                + '<strong>Album:</strong> ' + json[k].data.album + '<br/>'
+                + '<strong>Track:</strong> ' + json[k].data.track + '<br/>'
+                + '<strong>Title:</strong> ' + json[k].data.title + '<br/>'
+                + 'Song played ' + secondsToTime(parseInt((new Date() - ts) / 1000)) + ' ago.<br/>'
+            + '</div>');
+          }
+        }
+        j++;
+      }
+      tabs.tabs("refresh");
+    }
+
+    function secondsToTime(seconds) {
+      var sec = seconds % 60;  // Al dividir los segundos totales por 60 nos quedan los minutos y el resto son los segundos
+      seconds -= sec;  // Ya se tienen los segundos, asi que se quitan del total
+      seconds /= 60;  // Se dividen los segundos por 60 para pasarlo a minutos
+      var min = seconds % 60;  // Mismo proceso que antes
+      seconds -= min;
+      seconds /= 60;
+      var hor = seconds % 60;
+
+      if (hor !== 0)
+        return hor + ' hours ' + min + ' minutes ' + sec + ' seconds';
+      else
+        return min + ' minutes ' + sec + ' seconds';
+    }
+  </script>
+</body>
+</html>
